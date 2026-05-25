@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="work-bg">
+<header id="site-header" class="site-header">
+<div class="logo-center">
+    <img src="logo/IMG_9260.PNG" alt="Logo">
+</div>
+
+<nav class="menu-container">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </label>
+    <div class="menu-overlay">
+        <div class="blur-backdrop"></div> 
+        <ul class="menu-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="work.html">Works</a></li>
+            <li><a href="aboutme.html">About Me</a></li>
+            <li><a href="milestones.html">Milestones</a></li>
+            <li><a href="mailto:bosambathrattanak@gmail.com">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+</header>
+
+<main class="work-layout">
+    <section class="detail-container" style="padding: 150px 40px; text-align: center;">
+        
+        <div class="detail-info-group">
+            <h1 id="project-title" style="margin-top: 40px; font-weight: 900;"></h1>
+            <p id="project-date" style="color: #999; letter-spacing: 2px;"></p>
+            <p id="project-desc" style="max-width: 800px; margin: 20px auto; line-height: 1.6;"></p>
+        </div>
+
+        <img id="project-img" src="" style="width: 100%; height: auto; display: block;">
+    </section>
+
+    <section id="extra-gallery" class="extra-grid" style="display: none;">
+    <div class="gallery-wrapper" id="gallery-list">
+        </div>
+</section>
+</main>
+    <script>
+        // 1. Database of your projects
+    const projectData = {
+        "SANGKRAN": {
+            title: "My art work for SANGKRAN NGS ft Vichiny, Reaksa",
+            date: "APRIL 2025",
+            image: "image/IMG_7988.PNG",
+            desc: "Visual branding and digital art for the Sangkran event at NGS.",
+            // THESE ARE THE IMAGES YOU WANT TO SHOW
+            extraImages: ["image/IMG_7990.PNG", "image/IMG_7991.PNG", "image/IMG_7989.PNG", "image/IMG_7987.PNG"]
+        },
+        "Edits": {
+            title: "Photoshoots & Edits for family business",
+            date: "2025",
+            image: "image/photo_2026-05-24_22-35-10.jpg",
+            desc: "First time editing and do photoshoot.",
+            extraImages: ["image/photo_2026-05-24_22-35-11.jpg", "image/photo_2026-05-24_22-35-12.jpg"]
+        },
+        "Logos": {
+            title: "Logos Making",
+            date: "2024-2026",
+            image: "logo/photo_2026-05-24_22-53-52.jpg",
+            desc: "Many many logos ive made through years still have more in archive.",
+            extraImages: ["logo/photo_2026-05-24_22-44-55 (4).jpg", "logo/photo_2026-05-24_22-44-55 (5).jpg", "logo/photo_2026-05-24_22-44-55 (6).jpg", "logo/photo_2026-05-24_22-44-55 (7).jpg", "logo/photo_2026-05-24_22-44-56 (2).jpg", "logo/Untitled76.png"] // Empty means grid won't show
+        },
+        "furst": {
+            title: "Fur'st Project",
+            date: "2024",
+            image: "logo/Copy_of_Copy_of_Copy_of_Copy_of_Copy_of_McLaren_M23_20240627_214324.png",
+            desc: "We failed but at least we tried.",
+            extraImages: ["logo/photo_2024-06-30_16-49-18.jpg", "logo/photo_2024-09-03_12-34-13.jpg"] // Empty means grid won't show
+        },
+        "web": {
+            title: "Website from grade 10 and 11",
+            date: "2024-2025",
+            image: "image/Screenshot 2026-05-25 174049.png",
+            desc: "I made many websites but these two caught my eye the most.",
+            extraImages: ["image/Screenshot 2026-05-25 174213.png"] // Empty means grid won't show
+        }
+        };
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('project');
+
+    if (projectData[id]) {
+        // --- CRITICAL FIX: Define 'data' here ---
+        const data = projectData[id]; 
+
+        document.getElementById('project-title').innerText = data.title;
+        document.getElementById('project-date').innerText = data.date;
+        document.getElementById('project-img').src = data.image;
+        document.getElementById('project-desc').innerText = data.desc;
+
+        // --- GALLERY LOGIC ---
+        const gallerySection = document.getElementById('extra-gallery');
+        const galleryList = document.getElementById('gallery-list');
+
+        // Check if extraImages exists for THIS specific project
+        if (data.extraImages && data.extraImages.length > 0) {
+            gallerySection.style.display = "block"; // Make the section visible
+            galleryList.innerHTML = ""; // Clear any old images
+            
+            data.extraImages.forEach(imgSrc => {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'gallery-item';
+                imgDiv.innerHTML = `<img src="${imgSrc}" alt="Gallery Image">`;
+                galleryList.appendChild(imgDiv);
+            });
+        }
+    }
+    </script>
+</body>
+<footer class="rhode-footer">
+    <div class="rf-top">
+        
+        <div class="rf-left">
+            <p class="rf-tagline">Join the trajectory to an effortless aesthetic.</p>
+            <p class="rf-sub">Glaze your inbox with design updates, photography experiments, & exclusive content from Nak.</p>
+            
+            <div class="rf-subscribe-box">
+                <input type="email" placeholder="Email Address">
+                <button>SUBSCRIBE</button>
+            </div>
+            
+            <p class="rf-disclaimer">By signing up, you agree to our Privacy Policy*.</p>
+        </div>
+
+        <div class="rf-right">
+            <div class="rf-col">
+                <h4>NAVIGATE</h4>
+                <a href="index.html">Home</a>
+                <a href="work.html">Works</a>
+                <a href="aboutme.html">About Me</a>
+                <a href="milestones.html">Milestones</a>
+            </div>
+            
+            <div class="rf-col">
+                <h4>SOCIAL</h4>
+                <a href="https://www.instagram.com/ratnnak?igsh=cmZlNnhpODU5MjZ2&utm_source=qr" target="_blank">Instagram</a>
+                <a href="https://www.facebook.com/share/14Sbouc1Qez/?mibextid=wwXIfr" target="_blank">Facebook</a>
+                <a href="https://www.linkedin.com/in/bo-sambath-rattanak-212337368" target="_blank">LinkedIn</a>
+                <a href="https://music.apple.com/profile/bosambathrattanak" target="_blank">Apple Music</a>
+            </div>
+            
+            <div class="rf-col">
+                <h4>SUPPORT</h4>
+                <p>Based in Phnom Penh,<br>Cambodia.</p>
+                <p>Grade 12F (NGS)</p>
+                <a href="mailto:bosambathrattanak@gmail.com" style="margin-top: 15px; display: block;">Drop me a note anytime.</a>
+                <p class="rf-copyright">© Nak 2026</p>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<script src="script.js"></script>
+</html>

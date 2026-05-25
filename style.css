@@ -1,0 +1,3079 @@
+:root {
+    --paper: #f1f1f1;
+    --ink: #1a1a1a;
+    --total-time: 7.5s; 
+}
+
+/* 1. GLOBAL SETTINGS - Connecting Texture */
+html {
+    scroll-snap-type: none !important;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* The base of the whole site is now pure white */
+    background-color: #ffffff; 
+    overflow-x: hidden;
+}
+
+/* 2. HERO SECTION */
+.canvas {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* THE FIX: Texture is now PART of the first section */
+    background-color: var(--paper);
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    
+    /* Ensure this section stays below the work gallery when scrolling */
+    z-index: 1;
+}
+
+/* Star Background - Centered in the middle */
+.star-bg {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 900px;
+    opacity: 0.8;
+    mix-blend-mode: multiply;
+    z-index: 1;
+    animation: starToggle 2s steps(2) infinite;
+}
+
+@keyframes starToggle {
+    0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    100% { transform: translate(-50%, -50%) rotate(15deg) scale(1.03); }
+}
+
+/* 3. BRANDING - High Up & Left-Aligned */
+.branding {
+    position: absolute;
+    top: 25%; /* Balanced high position */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns both image and subtitle to the left */
+}
+
+.portfolio-container {
+    position: relative;
+    width: 600px;
+    height: 180px; 
+}
+
+.p-variant {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    mix-blend-mode: multiply;
+    animation: cycle var(--total-time) infinite;
+}
+
+/* Animation Keyframes (IMG_7929 to IMG_7932, pause on IMG_7928) */
+.v1 { animation-name: frame1; }
+.v2 { animation-name: frame2; }
+.v3 { animation-name: frame3; }
+.v4 { animation-name: frame4; }
+.v-main { animation-name: frameMain; }
+
+@keyframes frame1 { 0%, 6.6% { opacity: 1; } 6.7%, 100% { opacity: 0; } }
+@keyframes frame2 { 0%, 6.6% { opacity: 0; } 6.7%, 13.3% { opacity: 1; } 13.4%, 100% { opacity: 0; } }
+@keyframes frame3 { 0%, 13.3% { opacity: 0; } 13.4%, 20% { opacity: 1; } 20.1%, 100% { opacity: 0; } }
+@keyframes frame4 { 0%, 20% { opacity: 0; } 20.1%, 26.6% { opacity: 1; } 26.7%, 100% { opacity: 0; } }
+@keyframes frameMain { 0%, 26.6% { opacity: 0; } 26.7%, 100% { opacity: 1; } }
+
+/* Graphic Design Subtitle - Tucked Left Bottom */
+.subtitle { 
+    margin-top: 40px; 
+    margin-left: 0; /* Aligned exactly with left edge of image */
+    font-size: 1.5rem; 
+    align-self: flex-start;
+}
+
+.handwriting {
+    font-family: 'Reenie Beanie', cursive;
+    color: var(--ink);
+    font-size: 2rem;
+}
+
+/* 4. SIGNATURE SECTION - Bottom Right */
+/* 4. SIGNATURE SECTION - Tucked into Bottom Right Corner */
+.header-group {
+    position: absolute;
+    bottom: -20px; /* Tucks it slightly off-edge for a natural 'overflow' look */
+    right: -20px;  /* Tucks it slightly off-edge */
+    display: flex;
+    flex-direction: row; 
+    align-items: flex-end; /* Moves the text to the bottom of the photo area */
+    justify-content: flex-end;
+    gap: 100px; /* Space between the text and the strip */
+    z-index: 25;
+}
+
+.intro {
+    text-align: right;
+    margin: 0 0 100px 0; /* Adds a bit of bottom margin so text doesn't hit the screen edge */
+    line-height: 1.1;
+    font-size: 1.9rem;
+    color: var(--ink);
+    white-space: nowrap; 
+    flex-shrink: 0;
+}
+
+.stamp {
+    /* SIZE: Large size */
+    width: 180px; 
+    height: 550px; 
+    
+    /* NO ADJUSTMENTS: Transparent and no padding */
+    background: transparent;
+    padding: 0;
+    
+    /* ROTATION: 45 Degrees */
+    transform: rotate(25deg); 
+    margin-bottom: -80px;
+    margin-right: -10px;
+    /* DROP SHADOW: Deep and sharp */
+    filter: drop-shadow(15px 15px 35px rgba(0,0,0,0.3));
+    
+    /* DISABLE STAMP MASK */
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    
+    flex-shrink: 0;
+}
+
+.stamp img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .header-group {
+        right: -10px;
+        bottom: -10px;
+        transform: scale(0.6);
+        transform-origin: bottom right;
+    }
+}
+/* 5. WORK GALLERY (The scroll-down section) */
+/* 5. WORK GALLERY - Responsive & Contained */
+.work-gallery {
+    min-height: 100vh;
+    padding: 60px 15px; /* Smaller side padding for mobile */
+    background-color: #ffffff;
+    position: relative;
+    z-index: 20;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow-x: hidden; /* This kills the horizontal scroll bug */
+}
+
+.grid {
+    display: grid;
+    /* Changed 300px to 250px so it fits smaller phones */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px; /* Smaller gap for mobile */
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.polaroid {
+    background: white;
+    padding: 12px 12px 35px 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    transition: transform 0.4s ease;
+    border: 1px solid #eee;
+    
+    /* Crucial: Prevents the box from growing wider than the screen */
+    width: 100%;
+    max-width: 320px; 
+}
+
+.polaroid img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Subtle rotation that is safe for mobile edges */
+.item:nth-child(odd) .polaroid { transform: rotate(-1.5deg); }
+.item:nth-child(even) .polaroid { transform: rotate(1.5deg); }
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.03) !important;
+    z-index: 10;
+}
+
+/* Adjustments for desktop */
+@media (min-width: 768px) {
+    .grid { gap: 60px; }
+    .item:nth-child(even) .polaroid { margin-top: 40px; }
+}
+
+/* 6. RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .portfolio-container { width: 300px; height: 100px; }
+    .header-group { 
+        bottom: 30px; 
+        right: 30px; 
+        transform: scale(0.75); 
+        transform-origin: bottom right; 
+    }
+    .branding { top: 30%; }
+    .subtitle { font-size: 1.8rem; margin-top: -5px; }
+}
+
+/* --- MENU CONTAINER & HIDE CHECKBOX --- */
+.menu-container {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 2000;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+/* --- CLEAN NORMAL ICON --- */
+.hamburger {
+    width: 30px; 
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    z-index: 3100;
+}
+
+.line {
+    width: 100%;
+    height: 2px; /* Standard thin line */
+    background-color: var(--ink); /* #1a1a1a */
+    border-radius: 0; /* REMOVES THE HAND-DRAWN LOOK - PERFECTLY STRAIGHT */
+    transition: transform 0.3s ease-in-out, opacity 0.2s ease;
+}
+
+/* Ensure all lines are 100% width (no sketch variance) */
+.line:nth-child(2) {
+    width: 100%;
+    align-self: stretch;
+}
+
+/* --- PERFECT X ANIMATION --- */
+#menu-toggle:checked + .hamburger .line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+#menu-toggle:checked + .hamburger .line:nth-child(2) {
+    opacity: 0;
+}
+
+#menu-toggle:checked + .hamburger .line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* 1. MAIN OVERLAY CONTAINER */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2050;
+    
+    /* Hide it completely when closed */
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0.6s;
+}
+
+/* When the checkbox is checked, make it active */
+#menu-toggle:checked ~ .menu-overlay {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 2. THE BLUR BACKDROP (Fade ONLY - No Movement) */
+.blur-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.281);
+    
+    /* The Blur */
+    backdrop-filter: blur(25px) saturate(120%);
+    -webkit-backdrop-filter: blur(25px) saturate(120%);
+    
+    /* SMOOTH FADE */
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: -1;
+}
+
+/* Fades the blur in place when the menu opens */
+#menu-toggle:checked ~ .menu-overlay .blur-backdrop {
+    opacity: 1;
+}
+
+/* 3. THE NAVIGATION LINKS (Smooth Slide Down) */
+.menu-links {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    
+    /* START: Hidden above and invisible */
+    opacity: 0;
+    transform: translateY(-80px); /* Adjust this for how far it drops */
+    
+    /* GPU-ACCELERATED ANIMATION */
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+}
+
+/* SLIDE DOWN: When menu opens */
+#menu-toggle:checked ~ .menu-overlay .menu-links {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. LINK HOVER STYLES (Normal weight, Black box) */
+.menu-links a {
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 2.2rem;
+    font-weight: 400; 
+    padding: 10px 40px;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-links a:hover {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+/* --- OPTIONAL: Adjust handwriting subtitle lower --- */
+.subtitle { 
+    margin-top: 25px; /* Adjust this number to move "graphic design" lower */
+    margin-left: 0;
+    font-size: 2.5rem; 
+    align-self: flex-start;
+}
+
+/* --- 1. THE MAGNETIC PULL --- */
+html {
+    /* This creates the "magnet" feel when you start scrolling */
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+/* --- 2. THE ARROWHEAD HINT --- */
+.scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 15;
+    animation: bounce 2s infinite;
+}
+
+.arrowhead {
+    width: 20px;
+    height: 20px;
+    /* Creating a clean 'V' shape using borders */
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+}
+
+/* Subtle floating animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-10px); }
+    60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* --- 3. OPTIONAL: FADE OUT ARROW ON SCROLL --- */
+/* (This makes the arrow disappear as soon as you leave the first section) */
+.canvas {
+    overflow: visible;
+}
+
+/* --- 1. THE HEAVY FORCE PULL --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* Force the snap to be mandatory and strictly vertical */
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.canvas, .work-gallery {
+    height: 100vh;
+    width: 100vw;
+    /* Each section locks to the top of the screen */
+
+    position: relative;
+}
+
+.scroll-hint {
+    position: absolute; /* or fixed if you want it to stay until it fades */
+    bottom: 40px;
+    left: 50%;
+    /* This ensures the JS transition looks smooth */
+    transition: opacity 0.1s linear; 
+    z-index: 100;
+}
+
+.arrowhead {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    transform: rotate(45deg);
+    /* Keep your bounce animation here if you want it */
+}
+
+/* 5. WORK GALLERY (The scroll-down section) */
+.work-gallery {
+    min-height: 100vh;
+    padding: 100px 5%;
+    
+    /* Change background to solid white */
+    background-color: #ffffff; 
+    
+    /* Ensure it sits above the hero section during the pull */
+    position: relative;
+    z-index: 20;
+
+}
+
+/* --- MENU BUTTONS: 2PX THICKNESS --- */
+.menu-links li {
+    margin: 18px 0; /* Slightly more vertical breathing room */
+}
+
+.menu-links a {
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 1.8rem;
+    font-weight: 400;
+    
+    /* Force Equal Size */
+    width: 280px;      
+    display: block;    
+    margin: 0 auto;    
+    padding: 14px 0;   
+    text-align: center;
+    
+    /* THE OUTLINE: "Not too thick" 2px */
+    border: 2px solid var(--ink); 
+    background-color: transparent;
+    
+    /* Smooth Transition */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- HOVER STATE --- */
+.menu-links a:hover {
+    color: #ffffff;
+    background-color: var(--ink);
+    /* Keeps the 2px border but changes the fill */
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.footer-info {
+    position: absolute; /* This ignores the 'center' command of the parent */
+    bottom: 20px;       /* Distance from the bottom */
+    left: 40px;         /* Distance from the left */
+    z-index: 15;        /* Ensures it stays above the star background */
+    margin: 0;          /* Removes default paragraph spacing */
+}
+
+/* --- CLEAN WORK PAGE OVERRIDES --- */
+.work-bg {
+    background: #fff !important;
+    font-family: 'Inter', sans-serif;
+}
+
+.work-layout {
+    padding-top: 100px; /* Space for Nav */
+}
+
+/* THE BIG HERO */
+.main-feature {
+    width: 100%;
+    height: 85vh;
+    background: #000;
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.main-feature img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feature-text {
+    position: absolute;
+    bottom: 8%;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.feature-text h1 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.btn-more {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 35px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    background: rgba(0,0,0,0.5);
+}
+
+/* THE 2-COLUMN GRID (THE SQUASH FIX) */
+.work-grid-clean {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 40px; /* Spacing between rows and columns */
+    padding: 0 40px 100px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.work-item-new .img-box {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.work-item-new img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.work-item-new:hover img {
+    transform: scale(1.03);
+}
+
+.work-item-new h3 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.work-date {
+    font-size: 0.75rem;
+    color: #999;
+    letter-spacing: 2px;
+}
+
+/* Mobile Fix */
+@media (max-width: 800px) {
+    .work-grid-clean { grid-template-columns: 1fr; padding: 0 20px; }
+    .main-feature { height: 60vh; }
+}
+
+/* --- THE ULTIMATE BLEND FIX --- */
+.menu-container-central {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent; 
+    z-index: 9999; /* Make sure it's the highest thing on the page */
+    
+    /* This is the key: it blends everything inside the nav with the page */
+    mix-blend-mode: difference; 
+}
+
+/* BASE COLOR: Must be White (#ffffff) for 'difference' to flip to Black */
+.logo-center {
+    color: #ffffff; 
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: 8px;
+    margin: 0;
+}
+
+.hamburger-right {
+    position: absolute;
+    right: 40px;
+    width: 30px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+/* Apply the flip to the lines specifically */
+.hamburger-right .line {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff !important; /* Force the base to White */
+    display: block;
+    transition: 0.3s ease;
+}
+
+/* Ensure the sections underneath have solid backgrounds */
+/* Difference mode ONLY works if the background is PURE WHITE or PURE BLACK */
+.main-feature {
+    background-color: #000000; /* Pure Black */
+}
+
+/* THE UPDATED GRID */
+.work-grid-clean {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Keeps 2 columns */
+    gap: 60px 40px; 
+    padding: 0 40px 100px;
+    max-width: 1400px; /* Limits the overall width of the grid */
+    margin: 0 auto;
+}
+
+/* SET SPECIFIC IMAGE BOX SIZE */
+.work-item-new .img-box {
+    width: 100%;       /* Fills the grid column */
+    height: 300px;     /* SET YOUR SPECIFIC HEIGHT HERE */
+    overflow: hidden;
+    background: #f0f0f0; /* Placeholder color while images load */
+}
+
+.work-item-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This prevents the "squash" - it crops to fit perfectly */
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+/* Ensure the main content starts at the very top of the screen */
+.work-layout {
+    padding-top: 0 !important;
+}
+
+/* --- YOUR MENU STYLES (NO CHANGES) --- */
+.menu-container {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 2000;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+/* --- CLEAN NORMAL ICON --- */
+.hamburger {
+    width: 30px; 
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    z-index: 3100;
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--ink);
+    border-radius: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.2s ease;
+}
+
+.line:nth-child(2) {
+    width: 100%;
+    align-self: stretch;
+}
+
+/* --- PERFECT X ANIMATION --- */
+#menu-toggle:checked + .hamburger .line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+#menu-toggle:checked + .hamburger .line:nth-child(2) {
+    opacity: 0;
+}
+
+#menu-toggle:checked + .hamburger .line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* 1. MAIN OVERLAY CONTAINER */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2050;
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0.6s;
+}
+
+#menu-toggle:checked ~ .menu-overlay {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 2. THE BLUR BACKDROP */
+.blur-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.281);
+    backdrop-filter: blur(25px) saturate(120%);
+    -webkit-backdrop-filter: blur(25px) saturate(120%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: -1;
+}
+
+#menu-toggle:checked ~ .menu-overlay .blur-backdrop {
+    opacity: 1;
+}
+
+/* 3. THE NAVIGATION LINKS */
+.menu-links {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    opacity: 0;
+    transform: translateY(-80px);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease;
+}
+
+#menu-toggle:checked ~ .menu-overlay .menu-links {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. LINK HOVER STYLES */
+.menu-links a {
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 2.2rem;
+    font-weight: 400; 
+    padding: 10px 40px;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-links a:hover {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+/* --- LOGO CENTERING ADD-ON (Required for Works Page) --- */
+/* --- LOGO IMAGE CENTERING --- */
+.logo-center {
+    position: fixed;
+    top: -25px; /* Matches your hamburger top */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000; /* Higher than other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-center img {
+    height: 150px; /* Adjust this to make your logo bigger or smaller */
+    width: auto;  /* Maintains aspect ratio */
+    display: block;
+    
+    /* REMOVE mix-blend-mode if the image is still invisible */
+    /* mix-blend-mode: difference; */
+}
+
+/* Ensure the main container doesn't block the logo */
+.menu-container {
+    z-index: 2000;
+}
+
+.detail-container img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    background: #f1f1f1;
+}
+
+#project-title {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+/* 1. REMOVE THE BLUE & UNDERLINE */
+.work-link {
+    text-decoration: none !important; /* Removes the underline */
+    color: inherit !important;        /* Makes text use the parent color (Ink/Black) */
+    display: block;                  /* Ensures the whole area stays clickable */
+}
+
+/* 2. OPTIONAL: ADD A HOVER EFFECT */
+/* This makes the text slightly fade when you hover, so people know it's a link */
+.work-link:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+/* 1. THE ANIMATION KEYFRAMES */
+@keyframes swipeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(60px); /* Start lower */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* End at original position */
+    }
+}
+
+/* 2. APPLY TO THE IMAGE */
+#project-img {
+    opacity: 0; /* Start hidden */
+    animation: swipeUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.2s; /* Image starts first */
+}
+
+/* 3. APPLY TO THE TEXT CONTENT */
+/* We wrap the text in a group in HTML for a cleaner single-swipe effect */
+.detail-info-group {
+    opacity: 0; /* Start hidden */
+    animation: swipeUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.5s; /* Text follows image */
+}
+
+.extra-grid {
+    padding: 25px 40px;
+    background: transparent;
+    margin-top: -150px;
+}
+
+.gallery-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 Grid */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#project-img {
+    width: 100%;
+    max-width: 1100px; /* Limits how wide it gets on big screens */
+    height: auto;      /* This is the magic line that stops the cropping */
+    display: block;
+    margin: 0 auto;
+    
+    /* Keep your existing animation here */
+    opacity: 0;
+    animation: swipeUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.detail-container {
+    padding: 100px 20px; /* Gives some breathing room at the top and bottom */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gallery-item {
+    width: 100%;
+    height: auto;      /* Remove fixed height here too */
+    background: none;  /* Removes any black background color */
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;      /* Let the image breathe */
+    display: block;
+}
+
+/* Mobile: Switch to 1 column */
+@media (max-width: 768px) {
+    .gallery-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+.main-feature img {
+    width: 100%;
+    height: 140vh; /* Or whatever height you set */
+    object-fit: cover; /* Keeps aspect ratio */
+    
+    /* --- THE FIX --- */
+    /* 50% is horizontal (center), 100% is vertical (bottom) */
+    object-position: 50% 100%; 
+    z-index: -1;
+    display: block;
+}
+
+.work-grid-clean {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px 40px;
+    padding: 80px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    /* --- THE OVERLAP FIX --- */
+    position: relative; 
+    z-index: 5;          /* Puts it on top of the feature */
+    margin-top: -100px;  /* Pulls it up by 100px (adjust this number) */
+    background-color: #fff; /* Give it a solid color so you can't see the feature through it */
+}
+
+/* Optional: Add a subtle shadow to make the overlap pop */
+.work-grid-clean {
+    box-shadow: 0 -20px 50px rgba(0,0,0,0.1);
+}
+
+.main-feature {
+    position: relative;
+    z-index: 1; /* Keeps the feature lower */
+    overflow: hidden;
+}
+
+/* --- CLEAN SPLIT LAYOUT (Inspired by Reference) --- */
+
+.about-section {
+    background-color: #ffffff; /* Pure white background */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.about-container {
+    display: flex;
+    max-width: 1200px;
+    width: fit-content; /* This allows the container to be centered */
+    margin: 0 auto;     /* A "safety net" to ensure centering */
+    align-items: center; /* Optional: centers image and text vertically against each other */
+    gap: 60px;
+}
+
+.about-image {
+    flex: 0 0 350px; /* This locks the image width to 350px (adjust as needed) */
+    background: #f1f1f1;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.about-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: #1a1a1a;
+}
+
+.about-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.about-text-block p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    max-width: 500px; /* Keeps text from getting too wide/long */
+    text-transform: uppercase; /* Matching the high-fashion aesthetic */
+}
+
+.info-footer {
+    margin-top: auto; /* Pushes location/edu to the bottom */
+    display: flex;
+    gap: 50px;
+    padding-top: 40px;
+}
+
+.label {
+    display: block;
+    font-size: 0.7rem;
+    color: #999;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.value {
+    font-weight: 900;
+    font-size: 0.9rem;
+}
+
+/* Mobile: Stack them */
+@media (max-width: 900px) {
+    .about-container {
+        flex-direction: column;
+        gap: 30px;
+        padding: 20px;
+    }
+    .about-title { font-size: 1.8rem; }
+}
+
+.info-footer {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 40px; /* Space between the info and the button */
+    padding-top: 20px;
+}
+
+.btn-view-more {
+    display: inline-block;
+    width: fit-content;
+    padding: 12px 45px;
+    
+    /* Oddatelier Inspired Style */
+    border: 1px solid #1a1a1a;
+    background: transparent;
+    color: #1a1a1a;
+    
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    
+    transition: all 0.3s ease;
+}
+
+.btn-view-more:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+/* --- CLEAN ABOUT ME FIX --- */
+.action-group {
+    display: flex;
+    align-items: center; 
+    gap: 30px; 
+    margin-top: 0px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px; 
+}
+
+.social-links a {
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+    color: #999;
+}
+
+/* =========================================
+   SCATTERED CARDS LAYOUT (CLEANED UP)
+========================================= */
+
+/* --- SCATTERED CARDS LAYOUT (SCROLL LOCKED) --- */
+/* --- THE WIDE CANVAS FIX --- */
+
+.scatter-layout {
+    position: relative;
+    width: 100vw;
+    height: 100vh; 
+    background-color: #f9f9f9; 
+    overflow: hidden; /* Still no scrolling */
+}
+
+.scatter-container {
+    position: relative;
+    /* CHANGE: Stretches the container to the full width of the browser */
+    width: 95vw; 
+    
+    /* CHANGE: Gives the cards more vertical room to breathe */
+    height: calc(100vh - 200px); 
+    
+    /* CHANGE: Remove the 1400px limit so it can go as wide as the screen */
+    max-width: none; 
+    margin: 0 auto;
+    overflow: visible;
+    margin-bottom: 100px; 
+}
+
+.scatter-title {
+    position: relative; 
+    text-align: center; 
+    padding-top: 80px; /* Reduced to give more room for cards */
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -2px; /* Matching your tight Inter font-style */
+    color: #1a1a1a; 
+    z-index: 10;
+}
+
+/* --- THE PHYSICAL CARD (SMALLER AUTO-SIZE) --- */
+.cert-card {
+    position: absolute;
+    width: 220px; 
+    height: auto; 
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transform: rotate(var(--rot)); 
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, z-index 0s;
+    z-index: 5;
+}
+
+.cert-card img {
+    width: 100%;
+    height: auto; 
+    display: block; 
+    object-fit: contain; 
+}
+
+/* HOVER MAGIC */
+.cert-card:hover {
+    transform: scale(1.15) rotate(calc(var(--rot) + 4deg));
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25); 
+    z-index: 100; 
+}
+
+/* =========================================
+   THE POP-UP MODAL
+========================================= */
+.cert-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(8px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.cert-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.cert-modal-content {
+    width: 900px;
+    max-width: 90%;
+    height: 450px;
+    background: #ffffff;
+    display: flex; 
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.cert-modal.active .cert-modal-content {
+    transform: translateY(0);
+}
+
+.cert-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-family: Arial, sans-serif;
+    color: #1a1a1a;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    line-height: 1;
+}
+
+.cert-left {
+    flex: 1; 
+    background: #f1f1f1;
+}
+
+/* MODAL IMAGE SET TO CONTAIN */
+.cert-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    background: #f1f1f1;
+}
+
+.cert-right {
+    flex: 1; 
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cert-right h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0 0 15px 0;
+    color: #1a1a1a;
+    line-height: 1.1;
+}
+
+.cert-right p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 0;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+    .cert-modal-content {
+        flex-direction: column; 
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .cert-left {
+        height: 250px; 
+        flex: none;
+    }
+    .cert-right {
+        padding: 30px 20px;
+    }
+    .scatter-title {
+        font-size: 2rem;
+        padding-top: 120px;
+    }
+}
+
+/* --- RHODE-STYLE FOOTER --- */
+
+.rhode-footer {
+    /* Rhode uses a very subtle off-white/warm grey for their footer */
+    background-color: #fffefb; 
+    border-top: 1px solid #e5e5e5;
+    font-family: 'Inter', sans-serif;
+    color: #333333;
+    position: relative;
+    z-index: 50;
+}
+
+/* TOP SECTION: Split Layout */
+.rf-top {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* LEFT SIDE: Subscribe Area */
+.rf-left {
+    flex: 0 0 35%; /* Takes up 35% of the width */
+    padding: 60px 40px;
+    border-right: 1px solid #e5e5e5; /* The vertical divider line */
+}
+
+.rf-tagline {
+    font-size: 1rem;
+    color: #1a1a1a;
+    margin: 0 0 15px 0;
+}
+
+.rf-sub {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0 0 30px 0;
+    max-width: 300px;
+}
+
+/* The Pill Subscribe Box */
+.rf-subscribe-box {
+    display: flex;
+    background: #ffffff;
+    border-radius: 8px; /* Slight rounding like the reference */
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+    margin-bottom: 20px;
+    max-width: 350px;
+}
+
+.rf-subscribe-box input {
+    flex: 1;
+    border: none;
+    padding: 14px 15px;
+    font-size: 0.9rem;
+    outline: none;
+    color: #333;
+}
+
+.rf-subscribe-box button {
+    background: transparent;
+    border: none;
+    border-left: 1px solid #e5e5e5; /* Line separating input and button */
+    padding: 0 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.rf-subscribe-box button:hover {
+    background: #f0f0f0;
+}
+
+.rf-disclaimer {
+    font-size: 0.8rem;
+    color: #777;
+    margin: 0;
+}
+
+/* RIGHT SIDE: Links Grid */
+.rf-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4 equal columns */
+    padding: 60px 40px;
+    gap: 20px;
+}
+
+.rf-col h4 {
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: 1px;
+    margin: 0 0 20px 0;
+}
+
+.rf-col a, .rf-col p {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    text-decoration: none;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.rf-col a:hover {
+    color: #1a1a1a;
+}
+
+.rf-copyright {
+    margin-top: 30px !important;
+    font-size: 0.85rem !important;
+}
+
+/* BOTTOM BAR: Region Selector */
+.rf-bottom {
+    border-top: 1px solid #e5e5e5;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    background-color: #f7f6f2;
+}
+
+.rf-bottom p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.rf-bottom strong {
+    color: #1a1a1a;
+}
+
+.rf-bottom span {
+    font-size: 0.6rem;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+    .rf-top {
+        flex-direction: column; /* Stacks left and right */
+    }
+    
+    .rf-left {
+        border-right: none;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 40px 20px;
+    }
+    
+    .rf-right {
+        grid-template-columns: repeat(2, 1fr); /* Drops to 2 columns on tablets/phones */
+        padding: 40px 20px;
+        gap: 40px 20px;
+    }
+    
+    .rf-bottom {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .rf-right {
+        grid-template-columns: 1fr; /* 1 column on very small phones */
+    }
+}
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 4000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    transition: transform 0.4s ease-in-out; /* The slide speed */
+}
+
+/* This is what hides it */
+.site-header.nav-up {
+    transform: translateY(-100%);
+}
+
+/* --- HERO LAYOUT ADJUSTMENTS --- */
+/* --- FULL SCREEN HERO SECTION --- */
+/* --- FULL SCREEN HERO (SMALLER TEXT) --- */
+.hero-section {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%; /* Increased padding slightly to bring text inward */
+    background-color: #ffffff;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section h1 {
+    font-family: 'Inter', sans-serif;
+    /* REDUCED SIZE: changed max from 8rem to 5.5rem */
+    font-size: clamp(2.5rem, 8vw, 5.5rem); 
+    line-height: 1.0;
+    letter-spacing: -3px;
+    margin-bottom: 40px;
+    font-weight: 900;
+    color: #111;
+}
+
+.hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.hero-bottom p {
+    /* REDUCED SIZE: changed from 1.4rem to 1.1rem */
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 450px;
+    line-height: 1.6;
+    margin: 0;
+    text-transform: uppercase; /* Keeps the high-fashion look */
+    letter-spacing: 1px;
+}
+
+/* THE BUTTON STYLING */
+.btn-hero-more {
+    text-decoration: none;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    
+    /* Elegant border and padding */
+    border: 1px solid #111;
+    padding: 15px 35px;
+    transition: all 0.3s ease;
+}
+
+.btn-hero-more span {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+/* Hover Effect: Background fills and arrow moves */
+.btn-hero-more:hover {
+    background-color: #111;
+    color: #fff;
+}
+
+.btn-hero-more:hover span {
+    transform: translateX(5px);
+}
+
+
+
+/* Responsive: Stack them on small phones */
+@media (max-width: 768px) {
+    .hero-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+    }
+}
+
+.scramble-text span {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    /* Use a mono font if you want the scramble to look like a computer error */
+    /* font-family: 'Courier New', monospace; */
+}
+
+/* --- PREVENT SELECTION & DRAGGING --- */
+img {
+    -webkit-user-drag: none;  /* Prevents dragging in Chrome/Safari */
+    user-select: none;        /* Prevents selection */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;     /* This makes the image "invisible" to clicks */
+}
+
+/* Allow clicks on links that wrap images, but keep the image itself locked */
+a img {
+    pointer-events: none;
+}
+
+/* =========================================
+   SCATTERED CARDS LAYOUT (CLEANED UP)
+========================================= */
+
+.scatter-layout {
+    position: relative;
+    width: 100vw;
+    height: 100vh; 
+    background-color: #f9f9f9; 
+    overflow: hidden;
+}
+
+.scatter-container {
+    position: relative;
+    width: 95vw; 
+    height: calc(100vh - 200px); 
+    max-width: none; 
+    margin: 0 auto;
+    overflow: visible;
+    margin-bottom: 100px; 
+}
+
+.scatter-title {
+    position: relative; 
+    text-align: center; 
+    padding-top: 80px; 
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -2px; 
+    color: #1a1a1a; 
+    
+    /* FIX: Lower this to 1 so the title sits behind the cards */
+    z-index: 1; 
+}
+
+/* --- THE PHYSICAL CARD --- */
+.cert-card {
+    position: absolute;
+    width: 220px; 
+    height: auto; 
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    cursor: pointer;
+    
+    /* FIX: Pull the layout coordinates from your HTML */
+    top: var(--final-top);
+    left: var(--final-left);
+    
+    /* FIX: Center the card on its coordinates */
+    transform: translate(-50%, -50%) rotate(var(--rot)); 
+    
+    /* FIX: Bring back the burst animation */
+    animation: burstOut 1.2s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    
+    /* FIX: Raise this to 10 so they float OVER the text */
+    z-index: 10; 
+}
+
+.cert-card img {
+    width: 100%;
+    height: auto; 
+    display: block; 
+    object-fit: contain; 
+}
+
+/* HOVER MAGIC */
+.cert-card:hover {
+    /* FIX: Added translate(-50%, -50%) here so the cards don't jump when hovered */
+    transform: translate(-50%, -50%) scale(1.15) rotate(calc(var(--rot) + 4deg));
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25); 
+    z-index: 100; 
+}
+
+/* --- THE BURST ANIMATION --- */
+@keyframes burstOut {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    100% {
+        top: var(--final-top);
+        left: var(--final-left);
+        transform: translate(-50%, -50%) scale(1) rotate(var(--rot));
+        opacity: 1;
+    }
+}
+
+/* Stagger the animation so they pop out one by one */
+.cert-card:nth-child(1) { animation-delay: 0.1s; }
+.cert-card:nth-child(2) { animation-delay: 0.2s; }
+.cert-card:nth-child(3) { animation-delay: 0.3s; }
+.cert-card:nth-child(4) { animation-delay: 0.4s; }
+.cert-card:nth-child(5) { animation-delay: 0.5s; }
+.cert-card:nth-child(6) { animation-delay: 0.6s; }
+
+.scatter-title {
+    position: relative; 
+    text-align: center; 
+    padding-top: 90px; /* Pushes the title down cleanly away from the header */
+    margin-bottom: 0px; 
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -2px; 
+    color: #1a1a1a; 
+    z-index: 1; 
+}
+
+.scatter-container {
+    position: relative;
+    width: 95vw; 
+    /* Compensate for the extra space so the bottom cards don't get cut off */
+    height: calc(100vh - 300px); 
+    
+    /* THE MAGIC LINE: 120px of unbreakable space above the cards */
+    margin: 120px auto 0 auto; 
+    
+    max-width: none; 
+    overflow: visible;
+}
+
+/* ========================================================
+   DYNAMIC SCROLL GALLERY (ANTI-FLICKER FIX)
+======================================================== */
+
+.dynamic-gallery-section {
+    padding: 170px 0; /* Removed side padding so gallery reaches edges */
+    background: #ffffff;
+    width: 100vw;
+    overflow: hidden; 
+    box-sizing: border-box;
+}
+
+.dg-wrapper {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* --- LEFT SIDE: THE FLOATING TEXT --- */
+.dg-text {
+    position: absolute;
+    top: 50%;
+    left: 40px; 
+    transform: translateY(-50%) translateX(0); /* Centers it vertically */
+    z-index: 10;
+    pointer-events: none; /* Lets clicks pass through to the gallery */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease; 
+}
+
+.dg-text h2 {
+    min-width: max-content; /* THE FIX: Text can never squish or change height */
+    font-size: clamp(3rem, 6vw, 6rem); 
+    font-weight: 900;
+    line-height: 0.85; 
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+/* --- RIGHT SIDE: THE GALLERY --- */
+.dg-scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0 40px 20px 40px; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+
+.dg-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* THE FIX: This holds the empty space where the text sits */
+.dg-spacer {
+    flex: 0 0 45%; 
+    scroll-snap-align: start;
+}
+
+.dg-item {
+    flex: 0 0 400px; 
+    height: 300px;
+    background: #1a1a1a;
+    scroll-snap-align: start; 
+    position: relative;
+    cursor: pointer;
+}
+
+.dg-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
+}
+
+.dg-item:hover img {
+    opacity: 1;
+}
+
+.dg-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* --- THE MAGIC INTERACTION STATE --- */
+.dg-wrapper.is-scrolling .dg-text {
+    opacity: 0;   
+    /* Swipes perfectly to the left while keeping its exact height */
+    transform: translateY(-50%) translateX(-150px); 
+}
+
+.dg-wrapper.is-scrolling .dg-overlay {
+    opacity: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+    .dg-text { left: 20px; }
+    .dg-spacer { flex: 0 0 85vw; } /* Text takes up mostly the whole screen before swiping */
+    .dg-item { flex: 0 0 85vw; height: 250px; }
+}
+
+/* ========================================================
+   ORIGIN / MAP SECTION
+======================================================== */
+
+.origin-section {
+    padding: 40px 40px 120px 40px; /* Gives space before the footer */
+    background: #ffffff;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.origin-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.origin-header h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: #1a1a1a;
+    margin: 0 0 10px 0;
+}
+
+.origin-header p {
+    font-size: 1rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+/* THE MAP BOX */
+.map-container {
+    width: 100%;
+    height: 450px;
+    background: #f1f1f1;
+    overflow: hidden;
+    /* Optional: Editorial Black & White filter to match your aesthetic */
+    filter: grayscale(100%) contrast(1.1); 
+    transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Returns map to full color when hovered */
+.map-container:hover {
+    filter: grayscale(0%) contrast(1); 
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+    .origin-section { 
+        padding: 60px 20px 80px 20px; 
+    }
+    .map-container { 
+        height: 350px; 
+    }
+    .origin-header h2 { 
+        font-size: 2.5rem; 
+    }
+}
+
+/* ========================================================
+   MUSIC SECTION (HOVER ISOLATION EFFECT)
+======================================================== */
+
+.music-section {
+    padding: 20px 40px;
+    background: #ffffff;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.music-header {
+    margin-bottom: 40px;
+}
+
+.music-header h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: #1a1a1a;
+    margin: 0 0 10px 0;
+    line-height: 1;
+}
+
+.music-header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* The 4x2 Grid */
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.music-item {
+    display: block;
+    overflow: hidden;
+    background: #1a1a1a; /* Dark background before image loads */
+    aspect-ratio: 1 / 1; /* Forces perfect squares */
+    cursor: pointer;
+}
+
+.music-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Smooth transition for the color drain and zoom */
+    transition: filter 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* --- THE MAGIC INTERACTION --- */
+
+/* 1. When the GRID is hovered, turn ALL images grayscale and dim them */
+.music-grid:hover .music-item img {
+    filter: grayscale(100%);
+    opacity: 0.6; 
+}
+
+/* 2. BUT when a SPECIFIC ITEM is hovered, restore its color, opacity, and zoom in */
+.music-grid .music-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05); /* Slight editorial zoom */
+}
+
+/* Mobile adjustments: Drops to 2 columns on phones */
+@media (max-width: 900px) {
+    .music-section { padding: 60px 20px; }
+    .music-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+}
+
+/* ========================================================
+   EXPERIENCE & EDUCATION TIMELINE
+======================================================== */
+
+.experience-layout {
+    padding: 180px 40px 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.exp-header {
+    margin-bottom: 100px;
+}
+
+.exp-header h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -3px;
+    color: #1a1a1a;
+    margin: 0 0 10px 0;
+    line-height: 1;
+}
+
+.exp-header p {
+    font-size: 1.1rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+/* Timeline Rows */
+.exp-section {
+    display: flex;
+    border-top: 2px solid #1a1a1a;
+    padding: 60px 0;
+}
+
+/* Left Column (The Big Label) */
+.exp-label {
+    flex: 0 0 350px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #1a1a1a;
+}
+
+/* Right Column (The Details) */
+.exp-content {
+    flex: 1;
+}
+
+.exp-item {
+    margin-bottom: 60px;
+}
+
+.exp-item:last-child {
+    margin-bottom: 0;
+}
+
+.exp-item h3 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin: 0 0 5px 0;
+    letter-spacing: -1px;
+    color: #1a1a1a;
+}
+
+.exp-date {
+    font-size: 0.85rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.exp-item p:last-child {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #444;
+    max-width: 600px;
+    margin: 0;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 900px) {
+    .exp-section {
+        flex-direction: column;
+        padding: 40px 0;
+    }
+    .exp-label {
+        flex: none;
+        margin-bottom: 30px;
+    }
+}
+
+/* Left Column (The Big Label) */
+.exp-label {
+    flex: 0 0 350px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #1a1a1a;
+    
+    /* THE STICKY MAGIC */
+    position: sticky;
+    top: 150px; /* Locks it 150px from the top of the screen (under your nav) */
+    align-self: flex-start; /* Critical: tells the label to stay at the top and not stretch */
+}
+
+/* Left Column (The Big Stacked Label) */
+.exp-label {
+    flex: 0 0 350px;
+    
+    /* 1. Massive typography scaling */
+    font-size: clamp(4rem, 6vw, 6.5rem); 
+    font-weight: 900;
+    
+    /* 2. Squish the text tightly together */
+    line-height: 0.85; 
+    letter-spacing: -3px; 
+    color: #1a1a1a;
+    
+    /* 3. Keep the sticky scroll magic */
+    position: sticky;
+    top: 150px; 
+    align-self: flex-start; 
+}
+
+/* Mobile Adjustments for the massive text */
+@media (max-width: 900px) {
+    .exp-label {
+        font-size: 4rem;
+        position: relative; /* Turns off sticky on mobile so it doesn't take up the whole screen */
+        top: 0;
+        margin-bottom: 30px;
+    }
+}
+
+/* Left Column (The Big Stacked Label) */
+.exp-label {
+    /* FIX: Shrunk the invisible container from 350px down to 200px */
+    flex: 0 0 200px; 
+    
+    font-size: clamp(4rem, 6vw, 6.5rem); 
+    font-weight: 900;
+    line-height: 0.85; 
+    letter-spacing: -3px; 
+    color: #0017c6;
+    
+    position: sticky;
+    top: 150px; 
+    align-self: flex-start; 
+}
+
+/* --- EXPERIENCE ITEM WITH IMAGE (BULLETPROOF SPLIT) --- */
+.exp-item.with-image {
+    display: flex !important;
+    flex-direction: row !important; /* Absolutely forces text left, image right */
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.exp-text {
+    flex: 1 1 auto !important; /* Text takes all remaining space */
+}
+
+.exp-image {
+    flex: 0 0 250px !important; /* Hard-locks the image box to 250px wide */
+    width: 250px !important;
+}
+
+.exp-image img {
+    width: 100% !important;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+/* THE BIG PHOTO */
+.img-tall {
+    aspect-ratio: 4 / 5; 
+}
+
+/* THE SHORT STRIP PHOTOS */
+.img-strip {
+    aspect-ratio: 21 / 9; 
+}
+
+.exp-image img:hover {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+}
+
+/* Mobile Adjustments: Only stack on actual phones (max-width 600px instead of 900px) */
+@media (max-width: 600px) {
+    .exp-item.with-image {
+        flex-direction: column !important;
+        gap: 20px;
+    }
+    .exp-image {
+        flex: 0 0 auto !important;
+        width: 100% !important; 
+    }
+}
+
+.exp-image img {
+    width: 100% !important;
+    height: 100% !important;    
+    object-fit: contain; /* THE FIX */
+    filter: grayscale(100%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.exp-item {
+    /* Reduced from 60px to pull the sections closer together */
+    margin-bottom: 30px; 
+}
+
+.exp-item:last-child {
+    margin-bottom: 0;
+}
+
+/* --- THE INVISIBLE GAP FIX --- */
+.exp-image img {
+    width: 100% !important;
+    height: auto !important; /* THE FIX: Stops the invisible vertical stretching */
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.img-tall {
+    aspect-ratio: auto !important; /* THE FIX: Deletes the tall invisible box completely */
+}
+
+.exp-item {
+    margin-bottom: 30px; 
+}
+
+.exp-item:last-child {
+    margin-bottom: 0;
+}
+
+html {
+    scroll-snap-type: y proximity; /* Changes from mandatory to proximity */
+    scroll-behavior: smooth;
+}
+
+/* Make sure your footer is also allowed to be snapped to if needed */
+.rhode-footer {
+    scroll-snap-align: end; /* Aligns to the bottom of the footer when reached */
+}
+
+/* ========================================================
+   FORCE LOGO TO THE LEFT SIDE
+   ======================================================== */
+.site-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important; /* Pushes logo left, menu right */
+    align-items: center !important;
+    padding: 20px 40px !important;
+    box-sizing: border-box !important;
+    z-index: 99999 !important;
+}
+
+/* Neutralize any absolute centering coordinates */
+.logo-center, .logo-left {
+    position: relative !important;
+    left: auto !important;
+    transform: none !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+}
+
+/* Force the image size to sit cleanly */
+.logo-center img, .logo-left img {
+    height: 50px !important;
+    width: auto !important;
+    display: block !important;
+    padding-top: 50px ;
+}
+
+/* Ensure the navigation button sticks to the right side */
+.menu-container {
+    margin-left: auto !important; 
+}
+
+/* --- CLEAN POLAROID DISPLAY --- */
+.polaroid-container {
+    width: 100%;
+    height: auto !important; /* HARD COLLAPSES the 300vh extra space entirely */
+    min-height: auto !important;
+    background-color: #ffffff;
+    padding: 120px 0 !important; /* Uses normal top/bottom padding for spacing instead */
+    overflow: hidden !important; /* Ensures no inner scroll bars can ever appear */
+    box-sizing: border-box;
+}
+
+.polaroid-section {
+    position: relative !important; /* Changes from 'sticky' to 'relative' so it moves normally with the page */
+    top: auto !important;
+    left: auto !important;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important; /* Automatically stacks them safely if screen width gets tight */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 40px !important;
+}
+
+/* --- PREVENT SINGLE CARD DISPLACEMENTS --- */
+.polaroid-card, .card1, .card2, .card3 {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+}
+
+/* Base White Card Frame */
+.polaroid-card {
+    background-color: #ffffff !important;
+    padding: 16px 16px 36px 16px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 280px !important;  
+    height: 360px !important; 
+    box-sizing: border-box !important;
+    transition: transform 0.3s ease !important;
+}
+
+/* Safe, clean organic angles instead of breaking positions */
+.card1 { transform: rotate(-3deg) !important; }
+.card2 { transform: rotate(2deg) translateY(-10px) !important; }
+.card3 { transform: rotate(-1deg) !important; }
+
+.polaroid-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    z-index: 10 !important;
+}
+
+.polaroid-card img {
+    width: 100% !important;
+    height: 82% !important; 
+    object-fit: cover !important; 
+    object-position: center !important;
+}
+
+.polaroid-card p {
+    color: #000000 !important;
+    font-family: 'Reenie Beanie', cursive, sans-serif !important;
+    font-size: 22px !important;
+    text-align: center !important;
+    margin-top: auto !important; 
+    margin-bottom: 0 !important;
+}
+
+.canvas {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--paper);
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    z-index: 1;
+    overflow: hidden; /* THE FIX: Keeps all upper elements strictly contained inside the hero area */
+}
+
+/* ========================================================
+   HEADER & LOGO PADDING UNIFICATION FIX
+   ======================================================== */
+
+/* Force identical layout box height & padding everywhere */
+.site-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 80px !important; /* Forces the header block to be the exact same height on all pages */
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 40px !important; /* Left/Right edge padding */
+    box-sizing: border-box !important;
+    z-index: 99999 !important;
+    background: transparent !important; /* Keeps it blending into your backgrounds */
+}
+
+/* Ensure the logo wrapper aligns flawlessly in the dead center vertically */
+.logo-left {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Lock the physical image height so it can never alter header box layouts */
+.logo-left img {
+    height: 40px !important; /* Adjust this value if you want your logo slightly larger or smaller */
+    width: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+
+/* Ensure hamburger navigation matches the same vertical alignment axis */
+.menu-container {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    margin-left: auto !important;
+}
+
+/* ========================================================
+   HAMBURGER NAVIGATION VISIBILITY RESTORATION
+   ======================================================== */
+
+/* Ensure the header container holds both pieces cleanly */
+.site-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 80px !important;
+    display: flex !important;
+    justify-content: space-between !important; /* Forces logo left, menu right */
+    align-items: center !important; 
+    padding: 0 40px !important;
+    box-sizing: border-box !important;
+    z-index: 99999 !important;
+}
+
+/* Force the navigation alignment wrapper to stay visible on the right */
+.menu-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    position: relative !important;
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+    right: auto !important;
+}
+
+/* Force your hamburger bars to render and be clickable */
+.hamburger {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 30px !important;   /* Guarantees the interactive square size */
+    height: 20px !important;  /* Prevents collapsing to 0px height */
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 100000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin: 0 !important;
+}
+
+/* Re-ensure the lines inside the burger draw properly */
+.hamburger .line {
+    display: block !important;
+    width: 100% !important;
+    height: 2px !important;
+    background-color: #1a1a1a !important; /* Change to #ffffff if your layout text requires white bars */
+    transition: all 0.3s ease !important;
+}
+
+/* ========================================================
+   BULLETPROOF ABSOLUTE COORDINATE POSITION LOCK
+   ======================================================== */
+
+/* 1. Clear out any spacing, height, or vertical alignment conflicts on the headers */
+.site-header, 
+header#site-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 90px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    z-index: 99999 !important;
+    display: block !important; /* Disables flexbox layout interference entirely */
+}
+
+/* 2. Break the logo image wrappers out of normal rendering flow */
+.logo-left, 
+.logo-center, 
+header div[class^="logo-"] {
+    position: absolute !important;
+    /* FORCE THE EXACT COORDINATE FROM THE TOP CEILING & LEFT WALL */
+    top: 25px !important;  
+    left: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 3. Freeze the logo image dimensions so it can never scale or warp differently */
+.logo-left img, 
+.logo-center img, 
+header div[class^="logo-"] img {
+    height: 40px !important;
+    width: auto !important;
+    max-height: 40px !important;
+    min-height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+
+/* 4. Break the menu container out and glue it to the matching right boundary */
+.menu-container {
+    position: absolute !important;
+    /* PERFECT HORIZON LINE ALIGNMENT WITH THE LOGO CODES Above */
+    top: 35px !important; 
+    right: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+}
+
+/* ========================================================
+   HOME PAGE SCROLL SNAP MAGNET
+   ======================================================== */
+
+/* 1. Turn on the mandatory vertical snap tracker on the window container */
+html {
+    scroll-snap-type: y mandatory !important;
+    scroll-behavior: smooth !important;
+    overflow-x: hidden !important;
+}
+
+/* 2. Configure Section 1 (Hero Canvas) to snap hard to the top edge */
+.canvas {
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+    height: 100vh !important; /* Locks explicit fullscreen height context */
+}
+
+/* 3. Configure Section 2 (Selected Works) to snap cleanly right below it */
+.work-gallery,
+.polaroid-container,
+.work-gallery-section {
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+    min-height: 100vh !important;
+}
+
+/* 4. UNBLOCK FOOTER: Force the footer to snap to its bottom frame line */
+footer,
+.rhode-footer {
+    scroll-snap-align: end !important; /* Snaps baseline edge so no content gets cut off */
+    scroll-snap-stop: normal !important; /* Lets you fluidly slide back up without getting stuck */
+}
+
+/* ========================================================
+   CRISP WHITE CERTIFICATE BLOCK — COMPACT MARGINS
+   ======================================================== */
+
+/* ========================================================
+   CRUSH GAPS AND LOCK CERTIFICATE CONTAINER TO THE TOP
+   ======================================================== */
+
+/* 1. Force the container right above it to drop its massive bottom footprint */
+main,
+.exp-container,
+.work-bg main {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+/* 2. Seamlessly lock the pure white section to the baseline above */
+.cert-clean-white-section {
+    width: 100% !important;
+    padding: 0px 40px 80px 40px !important; /* Strict 0px top padding */
+    margin-top: -1px !important; /* Micro-pull up to eliminate any 1px layout glitch lines */
+    margin-bottom: 0px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+}
+
+/* 3. Drop all hidden h2 text spacing limits */
+.cert-clean-header {
+    text-align: center !important;
+    margin-top: 0px !important;
+    margin-bottom: 25px !important;
+    padding: 0px !important;
+}
+
+.cert-clean-header h2 {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 2.5rem !important;
+    letter-spacing: -1px !important;
+    color: #1a1a1a !important;
+    margin-top: 0px !important; /* Kills hidden browser native text padding */
+    margin-bottom: 4px !important;
+    padding: 0px !important;
+    line-height: 1.1 !important;
+}
+
+.cert-clean-header span {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 12px !important;
+    letter-spacing: 3px !important;
+    color: #666666 !important;
+    display: block !important;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+/* 4. Center your certificate image matrix wrapper perfectly */
+.cert-clean-frame {
+    width: 100% !important;
+    max-width: 800px !important;
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+    padding: 0px !important;
+    margin: 0px auto !important;
+}
+
+.cert-clean-img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    .canvas {
+        min-height: 100svh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .branding {
+        top: 22%;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+        align-items: center;
+    }
+
+    .portfolio-container {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+    }
+
+    .subtitle {
+        font-size: 1.4rem;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .handwriting {
+        font-size: 1.6rem;
+    }
+
+    .header-group {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        gap: 20px;
+        transform: scale(0.58);
+        transform-origin: bottom right;
+    }
+
+    .intro {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        white-space: normal;
+        max-width: 180px;
+    }
+
+    .stamp {
+        width: 130px;
+        height: 360px;
+        margin-bottom: -30px;
+    }
+
+    .menu-container {
+        top: 20px;
+        right: 20px;
+    }
+
+    .menu-links a {
+        width: 220px;
+        font-size: 1.2rem;
+        padding: 12px 0;
+    }
+
+    .work-gallery {
+        padding: 40px 20px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .polaroid {
+        max-width: 100%;
+        padding: 10px 10px 25px;
+    }
+
+    .scroll-hint {
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-container {
+        max-width: 260px;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .header-group {
+        transform: scale(0.5);
+    }
+
+    .intro {
+        font-size: 1rem;
+    }
+
+    .menu-links a {
+        width: 180px;
+        font-size: 1rem;
+    }
+}
+
+/* ==========================================================================
+   MOBILE FULL-BLEED WORKS GALLERY OVERRIDE (Hides Feature Section)
+   ========================================================================== */
+@media screen and (max-width: 800px) {
+    /* 1. Strip all side padding from the page container to allow edge-to-edge layouts */
+    .work-bg {
+        background-color: #ffffff !important;
+    }
+
+    .work-layout {
+        padding-top: 90px !important; /* Spacing below your header navigation */
+        padding-left: 0px !important;   /* Force full bleed left */
+        padding-right: 0px !important;  /* Force full bleed right */
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+
+    /* 2. REMOVE FEATURE SECTION COMPLETELY ON MOBILE */
+    .main-feature {
+        display: none !important;
+    }
+
+    /* 3. Convert Grid Columns into a pure Vertical, Edge-to-Edge Stack */
+    .work-grid-clean {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 40px !important; /* Space between stacked project items */
+        padding: 0px !important;
+        margin: 0px !important;
+        width: 100% !important;
+        box-shadow: none !important;
+    }
+
+    .work-item-new {
+        width: 100% !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+
+    .work-link {
+        display: flex !important;
+        flex-direction: column !important;
+        text-decoration: none !important;
+        width: 100% !important;
+    }
+
+    /* 4. Layout Rearrangement: Text first, then full-width image below it */
+    .work-item-new .img-box {
+        order: 3; /* Places image box at the bottom */
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 4 / 3 !important; /* Standard layout framing */
+        margin-bottom: 0px !important;
+        border-top: 1px solid #e5e5e5 !important;
+        border-bottom: 1px solid #e5e5e5 !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+
+    .work-item-new img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+    }
+
+    /* 5. Typography Formatting with side margins (so text isn't glued to screen edges) */
+    .work-item-new h3 {
+        order: 2; /* Title sits directly above the image box */
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 900 !important;
+        font-size: 1.6rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.5px !important;
+        color: #1a1a1a !important;
+        margin: 0 20px 14px 20px !important; /* Safe zone padding */
+        text-align: left !important;
+        text-transform: uppercase !important;
+    }
+
+    .work-item-new .work-date {
+        order: 1; /* Pushes meta line to the very top */
+        font-family: 'Inter', sans-serif !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+        color: #1a1a1a !important;
+        margin: 0 20px 6px 20px !important;
+        letter-spacing: 1px !important;
+        display: flex !important;
+        align-items: center !important;
+        text-transform: uppercase !important;
+    }
+
+    /* Prefix label styling */
+    .work-item-new .work-date::before {
+        content: "PRJ / ";
+        color: #888888;
+        font-weight: 400;
+        margin-right: 2px;
+    }
+}
+
+/* ==========================================================================
+   GLOBAL SCROLLBAR REMOVAL (Keeps scrolling functional but hides the bar)
+   ========================================================================== */
+html, body {
+    /* Hides scrollbar for Internet Explorer, Edge, and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow-x: hidden; /* Prevents accidental horizontal shifting */
+}
+
+/* Hides scrollbar for Chrome, Safari, and Opera */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* ==========================================================================
+   MOBILE FIX: Experience Page Scroll & Layout
+   ========================================================================== */
+@media screen and (max-width: 800px) {
+    /* 1. Stop the page from using complex layouts that pin elements */
+    .experience-layout {
+        display: block !important;
+        padding-top: 100px !important;
+        padding-bottom: 50px !important;
+    }
+
+    /* 2. Unpin the labels so they scroll normally */
+    .exp-section {
+        display: flex !important;
+        flex-direction: column !important; /* Stack Label and Content */
+        position: relative !important;
+        margin-bottom: 40px !important;
+    }
+
+    .exp-label {
+        position: relative !important; /* Forces it to scroll with the page */
+        width: 100% !important;
+        height: auto !important;
+        text-align: left !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 900 !important;
+        font-size: 1.8rem !important;
+        margin-bottom: 15px !important;
+        padding-left: 20px !important;
+        /* Converts "EDU-CAT-ION" to a single line */
+        white-space: nowrap !important; 
+    }
+
+    /* 3. Ensure content sits neatly below the label */
+    .exp-content {
+        padding: 0 20px !important;
+    }
+
+    .exp-item {
+        margin-bottom: 30px !important;
+    }
+
+    .exp-image img {
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* ==========================================================================
+   MOBILE: FIX EDUCATION/EXPERIENCE HEADER LAYOUT
+   ========================================================================== */
+@media screen and (max-width: 800px) {
+    /* Reset container to flow naturally */
+    .exp-clean-header, 
+    .cert-clean-header {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 20px !important;
+        margin: 40px 0 20px 0 !important;
+        text-align: left !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Force the word to stay on ONE LINE and fix the size */
+    .exp-clean-header h2, 
+    .cert-clean-header h2 {
+        display: block !important;
+        white-space: nowrap !important; /* Forces "EDUCATION" to stay in 1 line */
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 900 !important;
+        font-size: 2.2rem !important;  /* Adjusted size to fit phone width */
+        letter-spacing: -1px !important;
+        color: #1a1a1a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+    }
+
+    /* Fix the massive spacing by removing forced margins */
+    .exp-clean-section, 
+    .cert-clean-section {
+        margin-bottom: 20px !important; /* Reduced space between sections */
+    }
+}
+
+/* ==========================================================================
+   MOBILE: FORCE 1-LINE & UNPIN HEADERS
+   ========================================================================== */
+@media screen and (max-width: 800px) {
+    /* 1. Unpin headers: Stop them from tracking/sticking to the screen */
+    .exp-clean-header, 
+    .cert-clean-header {
+        position: relative !important;
+        margin-top: 40px !important;
+        margin-bottom: 20px !important;
+        padding: 0 20px !important;
+    }
+
+    /* 2. Force text to one line and fix the 3-line break */
+    .exp-clean-header h2, 
+    .cert-clean-header h2 {
+        display: block !important;
+        white-space: nowrap !important; /* Forces EDUCATION to be 1 line */
+        font-size: 1.8rem !important;    /* Smaller to fit phone width */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 3. Hide the line breaks (<br>) on mobile so they don't force 3 lines */
+    .exp-clean-header h2 br, 
+    .cert-clean-header h2 br {
+        display: none !important;
+    }
+
+    /* 4. Fix the large spacing/padding */
+    .exp-clean-section, 
+    .cert-clean-section {
+        margin-bottom: 30px !important;
+        padding: 0 !important;
+    }
+    /* 1. Force the word EDUCATION/EXPERIENCE to stay on one line */
+    .exp-label, 
+    .exp-label h2 {
+        white-space: nowrap !important;
+        display: block !important;
+        width: 100% !important;
+        font-size: 2rem !important; /* Adjust size so it fits */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* ==========================================================================
+   MOBILE CRITICAL FIX: UNPIN & FLATTEN HEADERS
+   ========================================================================== */
+@media screen and (max-width: 800px) {
+    /* 1. Unpin everything: Make headers scroll normally */
+    .exp-clean-header, 
+    .cert-clean-header, 
+    .exp-label {
+        position: relative !important;
+        margin: 40px 0 20px 0 !important;
+        padding: 0 20px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. Force text to single line, remove vertical breaks */
+    .exp-clean-header h2, 
+    .cert-clean-header h2, 
+    .exp-label {
+        display: block !important;
+        white-space: nowrap !important; /* Keep it on one line */
+        font-size: 2rem !important;      /* Optimized size */
+        line-height: 1.1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 3. Hide the <br> tags on mobile ONLY */
+    .exp-clean-header h2 br, 
+    .cert-clean-header h2 br,
+    .exp-label br {
+        display: none !important;
+    }
+
+    /* 4. Strip extra spacing */
+    .exp-clean-section, 
+    .cert-clean-section {
+        margin-bottom: 20px !important;
+    }
+}
+

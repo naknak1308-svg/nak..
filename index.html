@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nak's Portfolio</title>
+    <link rel="icon" type="image/jpeg" href="photo_2026-05-25_22-16-41.jpg">
+
+<script>
+    const favicon = document.getElementById('favicon');
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function handleColorSchemeChange(e) {
+        if (e.matches) {
+            favicon.href = 'image/IMG_7986.PNG'; // Use white icon in dark mode
+        } else {
+            favicon.href = 'image/IMG_7985.PNG'; // Use black icon in light mode
+        }
+    }
+
+    // Run on page load
+    handleColorSchemeChange(darkModeMediaQuery);
+
+    // Watch for theme changes while the page is open
+    darkModeMediaQuery.addEventListener('change', handleColorSchemeChange);
+</script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+</head>
+<body class="work-bg">
+<header id="site-header" class="site-header">
+    <div class="logo-left">
+        <img src="logo/IMG_9260.PNG" alt="Logo">
+    </div>
+
+    <nav class="menu-container">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </label>
+        <div class="menu-overlay">
+            <div class="blur-backdrop"></div> 
+            <ul class="menu-links">
+                <li><a href="work.html">Selected Works</a></li>
+                <li><a href="aboutme.html">About Me</a></li>
+                <li><a href="milestones.html">Milestones</a></li>
+                <li><a href="mailto:bosambathrattanak@gmail.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>    
+<main class="canvas">
+        <img src="image/IMG_7938.PNG" class="star-bg" alt="Star Background">
+
+        <div class="header-group">
+            <p class="handwriting intro">Hi, I am Nakkk<br>Welcome to my Portfolio!</p>
+<div class="stamp">
+    <img src="image/IMG_7949.PNG" alt="Photobooth Strip">
+</div>
+        </div>
+
+        <div class="branding">
+            <div class="portfolio-container">
+                <img src="image/IMG_7929.PNG" class="p-variant v1">
+                <img src="image/IMG_7930.PNG" class="p-variant v2">
+                <img src="image/IMG_7931.PNG" class="p-variant v3">
+                <img src="image/IMG_7932.PNG" class="p-variant v4">
+                <img src="image/IMG_7928.PNG" class="p-variant v-main">
+            </div>
+            <p class="handwriting subtitle">This is Nak's</p>
+        </div>
+
+        <div class="footer-info">
+            <p class="handwriting">2025</p>
+        </div>
+        <div class="scroll-hint">
+        <span class="arrowhead"></span>
+    </div>
+    </main>
+
+<section class="polaroid-container" style="background-color: #ffffff; padding: 60px 0; overflow: visible;">
+    <div class="gallery-header" style="text-align: center; margin-bottom: 40px;">
+        <h2 class="handwriting" style="font-size: 3.5rem; color: #1a1a1a;">Selected Works</h2>
+    </div>
+
+    <div class="polaroid-section">
+        
+        <div class="polaroid-card card1">
+            <img src="logo/photo_2026-05-24_22-44-55 (6).jpg" alt="Project 1">
+            <p>01. First f logo</p>
+        </div>
+
+        <div class="polaroid-card card2">
+            <img src="logo/photo_2026-05-24_22-44-56 (2).jpg" alt="Project 2">
+            <p>02. Second alt f logo</p>
+        </div>
+
+        <div class="polaroid-card card3">
+            <img src="logo/IMG_5084.JPG" alt="Project 3">
+            <p>03. club logo</p>
+        </div>
+
+        <div class="polaroid-card card1">
+            <img src="image/photo_2026-05-24_22-35-10.jpg" alt="Project 4">
+            <p>04. Edit my own self</p>
+        </div>
+
+    </div>
+</section>
+
+<footer class="rhode-footer">
+    <div class="rf-top">
+        
+        <div class="rf-left">
+            <p class="rf-tagline">Join the trajectory to an effortless aesthetic.</p>
+            <p class="rf-sub">Glaze your inbox with design updates, photography experiments, & exclusive content from Nak.</p>
+            
+            <div class="rf-subscribe-box">
+                <input type="email" placeholder="Email Address">
+                <button>SUBSCRIBE</button>
+            </div>
+            
+            <p class="rf-disclaimer">By signing up, you agree to our Privacy Policy*.</p>
+        </div>
+
+        <div class="rf-right">
+            <div class="rf-col">
+                <h4>NAVIGATE</h4>
+                <a href="index.html">Home</a>
+                <a href="work.html">Works</a>
+                <a href="aboutme.html">About Me</a>
+                <a href="milestones.html">Milestones</a>
+            </div>
+            
+            <div class="rf-col">
+                <h4>SOCIAL</h4>
+                <a href="https://www.instagram.com/ratnnak?igsh=cmZlNnhpODU5MjZ2&utm_source=qr" target="_blank">Instagram</a>
+                <a href="https://www.facebook.com/share/14Sbouc1Qez/?mibextid=wwXIfr" target="_blank">Facebook</a>
+                <a href="https://www.linkedin.com/in/bo-sambath-rattanak-212337368" target="_blank">LinkedIn</a>
+                <a href="https://music.apple.com/profile/bosambathrattanak" target="_blank">Apple Music</a>
+            </div>
+            
+            <div class="rf-col">
+                <h4>SUPPORT</h4>
+                <p>Based in Phnom Penh,<br>Cambodia.</p>
+                <p>Grade 12F (NGS)</p>
+                <a href="mailto:bosambathrattanak@gmail.com" style="margin-top: 15px; display: block;">Drop me a note anytime.</a>
+                <p class="rf-copyright">© Nak 2026</p>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<script src="script.js"></script>
+
+</body>
+</html>
